@@ -2,16 +2,34 @@
 
 namespace app\controllers;
 
+use app\models\CharacterModel;
+
 class CharacterController
 {
     public function create($request)
     {
-        return json_encode(['message' => 'create']);
+        $character = new CharacterModel();
+
+        $character->setName($request['name']);
+        $character->setDescription($request['description']);
+        $character->setPlaceOfBirth($request['placeOfBirth']);
+        $character->setOccupation($request['occupation']);
+        $character->setFruit($request['fruit']);
+
+        return json_encode(['message' => 'create', 'data' => $character]);
     }
 
     public function update($request, $params)
     {
-        return json_encode(['message' => 'update']);
+        $character = new CharacterModel();
+
+        $character->setName($request['name']);
+        $character->setDescription($request['description']);
+        $character->setPlaceOfBirth($request['placeOfBirth']);
+        $character->setOccupation($request['occupation']);
+        $character->setFruit($request['fruit']);
+
+        return json_encode(['message' => 'update', 'data' => $character]);
     }
 
     public function list()
