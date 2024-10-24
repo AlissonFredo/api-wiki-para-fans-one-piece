@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS db_api_wiki_one_piece;
 
 USE db_api_wiki_one_piece;
 
-CREATE TABLE users (
+CREATE TABLE characters (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,

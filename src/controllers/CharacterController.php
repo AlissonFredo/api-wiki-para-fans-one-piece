@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-class PersonageController
+class CharacterController
 {
     public function create($request)
     {
