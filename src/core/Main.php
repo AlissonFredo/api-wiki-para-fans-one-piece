@@ -3,7 +3,7 @@
 namespace app\core;
 
 use app\core\Router;
-use app\controllers\PersonageController;
+use app\controllers\CharacterController;
 
 class Main
 {
@@ -11,12 +11,12 @@ class Main
     {
         $router = new Router();
 
-        $router->addRoute("POST", "/personages", PersonageController::class, 'create');
-        $router->addRoute("PUT", "/personages", PersonageController::class, 'update');
-        $router->addRoute("GET", "/personages/list", PersonageController::class, 'list');
-        $router->addRoute("GET", "/personages/show", PersonageController::class, 'showById');
-        $router->addRoute("DELETE", "/personages", PersonageController::class, 'destroy');
-        $router->addRoute("GET", "/personages/search", PersonageController::class, 'searchByName');
+        $router->addRoute("POST", "/characters", CharacterController::class, 'create');
+        $router->addRoute("PUT", "/characters", CharacterController::class, 'update');
+        $router->addRoute("GET", "/characters/list", CharacterController::class, 'list');
+        $router->addRoute("GET", "/characters/show", CharacterController::class, 'showById');
+        $router->addRoute("DELETE", "/characters", CharacterController::class, 'destroy');
+        $router->addRoute("GET", "/characters/search", CharacterController::class, 'searchByName');
 
         $method = $_SERVER['REQUEST_METHOD'];
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
