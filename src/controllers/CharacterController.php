@@ -3,9 +3,16 @@
 namespace app\controllers;
 
 use app\models\CharacterModel;
+use app\repositories\CharacterRepository;
 
 class CharacterController
 {
+    private $repository;
+
+    public function __construct()
+    {
+        $this->repository = new CharacterRepository;
+    }
     public function create($request)
     {
         $character = new CharacterModel();
@@ -16,7 +23,15 @@ class CharacterController
         $character->setOccupation($request['occupation']);
         $character->setFruit($request['fruit']);
 
-        return json_encode(['message' => 'create', 'data' => $character]);
+        $response = $this->repository->create($character);
+
+        if ($response) {
+            http_response_code(201);
+            return json_encode(['message' => 'success in creating a character']);
+        } else {
+            http_response_code(400);
+            return json_encode(['message' => 'error creating a character']);
+        }
     }
 
     public function update($request, $params)
