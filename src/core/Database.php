@@ -34,7 +34,7 @@ class Database
 
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch (PDOException $exception) {
-            error_log("Connection error: {$exception->getMessage()}", 3, __DIR__ . "/../../.env");
+            error_log("Connection error: {$exception->getMessage()}", 3, __DIR__ . "/../../log/error.log");
         }
 
         return $this->conn;
