@@ -55,9 +55,15 @@ class CharacterController
         return json_encode(['message' => 'Success in searching all characters', 'data' => $response]);
     }
 
-    public function showById()
+    public function showById($params)
     {
-        return json_encode(['message' => 'showById']);
+        $response = $this->repository->show($params['id']);
+
+        if ($response) {
+            return json_encode(['message' => 'Success searching character by id', 'data' => $response]);
+        } else {
+            return json_encode(['message' => 'Error searching character by id']);
+        }
     }
 
     public function destroy($params)

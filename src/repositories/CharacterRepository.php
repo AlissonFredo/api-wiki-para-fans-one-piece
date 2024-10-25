@@ -51,4 +51,13 @@ class CharacterRepository
         $stmt = $this->conn->query($query);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function show($id)
+    {
+        $query = "SELECT * FROM characters WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
