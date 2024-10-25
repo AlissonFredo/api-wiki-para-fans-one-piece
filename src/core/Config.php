@@ -7,6 +7,7 @@ class Config
     public static function load($file)
     {
         if (!file_exists($file)) {
+            error_log("Configuration file not found: {$file}", 3, __DIR__ . '/../../log/error.log');
             throw new \Exception("Configuration file not found: {$file}");
         }
 
