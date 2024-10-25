@@ -4,11 +4,14 @@ namespace app\core;
 
 use app\core\Router;
 use app\controllers\CharacterController;
+use app\core\Config;
 
 class Main
 {
     static function initialize()
     {
+        Config::load(__DIR__ . "/../../.env");
+
         $router = new Router();
 
         $router->addRoute("POST", "/characters", CharacterController::class, 'create');
