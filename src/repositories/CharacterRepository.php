@@ -2,7 +2,7 @@
 
 namespace app\repositories;
 
-use PDOException;
+use PDO;
 use app\core\Database;
 use app\models\CharacterModel;
 
@@ -43,5 +43,12 @@ class CharacterRepository
         $stmt->bindParam("fruit", $character->getFruit());
 
         return $stmt->execute();
+    }
+
+    public function list()
+    {
+        $query = "SELECT * FROM characters";
+        $stmt = $this->conn->query($query);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

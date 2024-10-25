@@ -49,7 +49,10 @@ class CharacterController
 
     public function list()
     {
-        return json_encode(['message' => 'list']);
+        $response = $this->repository->list();
+
+        http_response_code(200);
+        return json_encode(['message' => 'Success in searching all characters', 'data' => $response]);
     }
 
     public function showById()
