@@ -27,10 +27,10 @@ class CharacterController
 
         if ($response) {
             http_response_code(201);
-            return json_encode(['message' => 'success in creating a character']);
+            return json_encode(['message' => 'Success in creating a character']);
         } else {
             http_response_code(400);
-            return json_encode(['message' => 'error creating a character']);
+            return json_encode(['message' => 'Error creating a character']);
         }
     }
 
@@ -60,6 +60,7 @@ class CharacterController
         $response = $this->repository->show($params['id']);
 
         if ($response) {
+            http_response_code(200);
             return json_encode(['message' => 'Success searching character by id', 'data' => $response]);
         } else {
             return json_encode(['message' => 'Error searching character by id']);
@@ -68,7 +69,15 @@ class CharacterController
 
     public function destroy($params)
     {
-        return json_encode(['message' => 'destroy']);
+        $response = $this->repository->destroy($params['id']);
+
+        if ($response) {
+            http_response_code(200);
+            return json_encode(['message' => 'Success in deleting a character']);
+        } else {
+            http_response_code(400);
+            return json_encode(['message' => 'Error in deleting a character']);
+        }
     }
 
     public function searchByName($params)
