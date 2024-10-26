@@ -60,4 +60,12 @@ class CharacterRepository
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function destroy($id)
+    {
+        $query = "DELETE FROM characters WHERE id = :id";
+        $stmt = $this->conn->query($query);
+        $stmt->bindParam(":id", $id);
+        return $stmt->execute();
+    }
 }
