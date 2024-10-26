@@ -64,7 +64,7 @@ class CharacterRepository
     public function destroy($id)
     {
         $query = "DELETE FROM characters WHERE id = :id";
-        $stmt = $this->conn->query($query);
+        $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
         return $stmt->execute();
     }
