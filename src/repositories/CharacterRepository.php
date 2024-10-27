@@ -36,11 +36,11 @@ class CharacterRepository
 
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam("name", $character->getName());
-        $stmt->bindParam("description", $character->getDescription());
-        $stmt->bindParam("place_of_birth", $character->getPlaceOfBirth());
-        $stmt->bindParam("occupations", $character->getOccupation());
-        $stmt->bindParam("fruit", $character->getFruit());
+        $stmt->bindParam(":name", $character->getName());
+        $stmt->bindParam(":description", $character->getDescription());
+        $stmt->bindParam(":place_of_birth", $character->getPlaceOfBirth());
+        $stmt->bindParam(":occupations", $character->getOccupation());
+        $stmt->bindParam(":fruit", $character->getFruit());
 
         return $stmt->execute();
     }
@@ -66,6 +66,28 @@ class CharacterRepository
         $query = "DELETE FROM characters WHERE id = :id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":id", $id);
+        return $stmt->execute();
+    }
+
+    public function update(CharacterModel $character, $id)
+    {
+        $query = "
+            UPDATE characters SET 
+                name = :name,
+                description = :description,
+                place_of_birth = :place_of_birth,
+                occupations = :occupations,
+                fruit = :fruit
+            WHERE id = :id
+        ";
+
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->bindParam(":name", $character->getName());
+        $stmt->bindParam(":description", $character->getDescription());
+        $stmt->bindParam(":place_of_birth", $character->getPlaceOfBirth());
+        $stmt->bindParam(":occupations", $character->getOccupation());
+        $stmt->bindParam(":fruit", $character->getFruit());
         return $stmt->execute();
     }
 }
