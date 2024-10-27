@@ -44,7 +44,15 @@ class CharacterController
         $character->setOccupation($request['occupation']);
         $character->setFruit($request['fruit']);
 
-        return json_encode(['message' => 'update', 'data' => $character]);
+        $response = $this->repository->update($character, $params['id']);
+
+        if ($response) {
+            http_response_code(200);
+            return json_encode(['message' => 'Success in upgrading a character']);
+        } else {
+            http_response_code(400);
+            return json_encode(['message' => 'Error upgrading a character']);
+        }
     }
 
     public function list()
