@@ -90,4 +90,17 @@ class CharacterRepository
         $stmt->bindParam(":fruit", $character->getFruit());
         return $stmt->execute();
     }
+
+    public function searchByName($name)
+    {
+        $query = "SELECT * FROM characters WHERE name LIKE :name";
+
+        $stmt = $this->conn->prepare($query);
+
+        $name = "%{$name}%";
+        $stmt->bindParam(":name", $name);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
