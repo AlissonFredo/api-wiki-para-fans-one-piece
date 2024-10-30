@@ -90,6 +90,14 @@ class CharacterController
 
     public function searchByName($params)
     {
-        return json_encode(['message' => 'searchByName']);
+        $response = $this->repository->searchByName($params['name']);
+
+        if ($response) {
+            http_response_code(200);
+            return json_encode(['message' => 'Success searching character by name', 'data' => $response]);
+        } else {
+            http_response_code(400);
+            return json_encode(['message' => 'Error searching character by name', 'data' => $response]);
+        }
     }
 }

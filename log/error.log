@@ -1,4 +1,9 @@
-Connection error: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'INSERTa INTO characters (
-                name,
-                description,
-...' at line 1Connection error: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'place_of_birth' cannot be nullConnection error: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'occupations' cannot be null
+Connection error: Object of class PDOStatement could not be converted to string 
+Connection error: {"queryString":"\n                SELECT * \n                FROM characters \n                WHERE name LIKE '%:name%'\n            "} 
+Connection error: {"queryString":"\n                SELECT * \n                FROM characters \n                WHERE name = :name\n            "} 
+Connection error: {"queryString":"\n                SELECT * \n                FROM characters \n                WHERE name = :name\n            "} 
+Connection error: {"queryString":"\n                SELECT * \n                FROM characters \n                WHERE name = :name\n            "} 
+Connection error: {"queryString":"\n                SELECT * \n                FROM characters \n                WHERE name = :name\n            "} 
+Connection error: {"queryString":"\n                SELECT * \n                FROM characters \n                WHERE name LIKE '%:name%'\n            "} 
+Connection error: Cannot pass parameter 2 by reference 
+Connection error: Cannot pass parameter 2 by reference 
