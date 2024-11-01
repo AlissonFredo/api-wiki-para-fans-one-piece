@@ -23,13 +23,18 @@ class CharacterController
         $character->setOccupation($request['occupation']);
         $character->setFruit($request['fruit']);
 
+        if ($character->existsErrors()) {
+            http_response_code(400);
+            return json_encode(['message' => 'Error creating a character', 'errors' => $character->getErrors()]);
+        }
+
         $response = $this->repository->create($character);
 
         if ($response) {
-            http_response_code(201);
+            http_response_code(200);
             return json_encode(['message' => 'Success in creating a character']);
         } else {
-            http_response_code(400);
+            http_response_code(500);
             return json_encode(['message' => 'Error creating a character']);
         }
     }
@@ -44,13 +49,18 @@ class CharacterController
         $character->setOccupation($request['occupation']);
         $character->setFruit($request['fruit']);
 
+        if ($character->existsErrors()) {
+            http_response_code(400);
+            return json_encode(['message' => 'Error creating a character', 'errors' => $character->getErrors()]);
+        }
+
         $response = $this->repository->update($character, $params['id']);
 
         if ($response) {
             http_response_code(200);
             return json_encode(['message' => 'Success in upgrading a character']);
         } else {
-            http_response_code(400);
+            http_response_code(500);
             return json_encode(['message' => 'Error upgrading a character']);
         }
     }
