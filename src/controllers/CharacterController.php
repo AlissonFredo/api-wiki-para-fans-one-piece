@@ -52,6 +52,9 @@ class CharacterController
         if ($character->existsErrors()) {
             http_response_code(400);
             return json_encode(['message' => 'Error creating a character', 'errors' => $character->getErrors()]);
+        } elseif (!isset($params['id']) || $params['id'] === '') {
+            http_response_code(400);
+            return json_encode(['message' => 'Error creating a character', 'errors' => array(['id' => 'Id is a required attribute'])]);
         }
 
         $response = $this->repository->update($character, $params['id']);
@@ -75,6 +78,11 @@ class CharacterController
 
     public function showById($params)
     {
+        if (!isset($params['id']) || $params['id'] === '') {
+            http_response_code(400);
+            return json_encode(['message' => 'Error searching character by id', 'errors' => array(['id' => 'Id is a required attribute'])]);
+        }
+
         $response = $this->repository->show($params['id']);
 
         if ($response) {
@@ -87,6 +95,11 @@ class CharacterController
 
     public function destroy($params)
     {
+        if (!isset($params['id']) || $params['id'] === '') {
+            http_response_code(400);
+            return json_encode(['message' => 'Error deleting a character', 'errors' => array(['id' => 'Id is a required attribute'])]);
+        }
+
         $response = $this->repository->destroy($params['id']);
 
         if ($response) {
@@ -100,6 +113,11 @@ class CharacterController
 
     public function searchByName($params)
     {
+        if (!isset($params['name']) || $params['name'] === '') {
+            http_response_code(400);
+            return json_encode(['message' => 'Error searching character by name', 'errors' => array(['name' => 'Name is a required attribute'])]);
+        }
+
         $response = $this->repository->searchByName($params['name']);
 
         if ($response) {
