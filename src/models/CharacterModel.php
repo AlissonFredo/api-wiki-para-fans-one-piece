@@ -13,6 +13,13 @@ class CharacterModel
     private $createdAt;
     private $updatedAt;
 
+    private $errors;
+
+    public function __construct()
+    {
+        $this->errors = [];
+    }
+
     public function getId()
     {
         return $this->id;
@@ -30,7 +37,15 @@ class CharacterModel
 
     public function setName($name)
     {
-        $this->name = $name;
+        if (strlen($name) > 0) {
+            if (strlen($name) <= 255) {
+                $this->name = $name;
+            } else {
+                array_push($this->errors, ['name' => 'Name can have a maximum of 255 characters']);
+            }
+        } else {
+            array_push($this->errors, ['name' => 'Name is a required attribute']);
+        }
     }
 
     public function getDescription()
@@ -40,7 +55,11 @@ class CharacterModel
 
     public function setDescription($description)
     {
-        $this->description = $description;
+        if (strlen($description) > 0) {
+            $this->description = $description;
+        } else {
+            array_push($this->errors, ['description' => 'Description is a required attribute']);
+        }
     }
 
     public function getPlaceOfBirth()
@@ -50,7 +69,15 @@ class CharacterModel
 
     public function setPlaceOfBirth($placeOfBirth)
     {
-        $this->placeOfBirth = $placeOfBirth;
+        if (strlen($placeOfBirth) > 0) {
+            if (strlen($placeOfBirth) <= 255) {
+                $this->placeOfBirth = $placeOfBirth;
+            } else {
+                array_push($this->errors, ['placeOfBirth' => 'Place of birth can have a maximum of 255 characters']);
+            }
+        } else {
+            array_push($this->errors, ['placeOfBirth' => 'Place of birth is a required attribute']);
+        }
     }
 
     public function getOccupation()
@@ -60,7 +87,15 @@ class CharacterModel
 
     public function setOccupation($occupation)
     {
-        $this->occupation = $occupation;
+        if (strlen($occupation) > 0) {
+            if (strlen($occupation) <= 255) {
+                $this->occupation = $occupation;
+            } else {
+                array_push($this->errors, ['occupation' => 'Occupation can have a maximum of 255 characters']);
+            }
+        } else {
+            array_push($this->errors, ['occupation' => 'Occupation is a required attribute']);
+        }
     }
 
     public function getFruit()
@@ -70,7 +105,11 @@ class CharacterModel
 
     public function setFruit($fruit)
     {
-        $this->fruit = $fruit;
+        if (strlen($fruit) <= 255) {
+            $this->fruit = $fruit;
+        } else {
+            array_push($this->errors, ['fruit' => 'Fruit can have a maximum of 255 characters']);
+        }
     }
 
     public function getCreatedAt()
@@ -81,6 +120,16 @@ class CharacterModel
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    public function existsErrors()
+    {
+        return count($this->errors) > 0;
+    }
+
+    public function getErrors()
+    {
+        return $this->errors;
     }
 
     public function __toString()
