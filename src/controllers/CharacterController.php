@@ -72,8 +72,13 @@ class CharacterController
     {
         $response = $this->repository->list();
 
-        http_response_code(200);
-        return json_encode(['message' => 'Success in searching all characters', 'data' => $response]);
+        if ($response !== false) {
+            http_response_code(200);
+            return json_encode(['message' => 'Success in searching all characters', 'data' => $response]);
+        } else {
+            http_response_code(500);
+            return json_encode(['message' => 'Error searching all characters']);
+        }
     }
 
     public function showById($params)
@@ -85,10 +90,11 @@ class CharacterController
 
         $response = $this->repository->show($params['id']);
 
-        if ($response) {
+        if ($response !== false) {
             http_response_code(200);
             return json_encode(['message' => 'Success searching character by id', 'data' => $response]);
         } else {
+            http_response_code(500);
             return json_encode(['message' => 'Error searching character by id']);
         }
     }
@@ -106,7 +112,7 @@ class CharacterController
             http_response_code(200);
             return json_encode(['message' => 'Success in deleting a character']);
         } else {
-            http_response_code(400);
+            http_response_code(500);
             return json_encode(['message' => 'Error in deleting a character']);
         }
     }
@@ -120,12 +126,12 @@ class CharacterController
 
         $response = $this->repository->searchByName($params['name']);
 
-        if ($response) {
+        if ($response !== false) {
             http_response_code(200);
             return json_encode(['message' => 'Success searching character by name', 'data' => $response]);
         } else {
-            http_response_code(400);
-            return json_encode(['message' => 'Error searching character by name', 'data' => $response]);
+            http_response_code(500);
+            return json_encode(['message' => 'Error searching character by name']);
         }
     }
 }
