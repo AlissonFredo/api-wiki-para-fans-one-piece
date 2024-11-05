@@ -18,8 +18,8 @@ class CharacterRepository
 
     public function create(CharacterModel $character)
     {
-        $query = "
-            INSERT INTO characters (
+        try {
+            $query = "INSERT INTO characters (
                 name,
                 description,
                 place_of_birth,
@@ -31,76 +31,147 @@ class CharacterRepository
                 :place_of_birth,
                 :occupations,
                 :fruit
-            )
-        ";
+            )";
 
-        $stmt = $this->conn->prepare($query);
+            $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(":name", $character->getName());
-        $stmt->bindParam(":description", $character->getDescription());
-        $stmt->bindParam(":place_of_birth", $character->getPlaceOfBirth());
-        $stmt->bindParam(":occupations", $character->getOccupation());
-        $stmt->bindParam(":fruit", $character->getFruit());
+            $stmt->bindParam(":name", $character->getName());
+            $stmt->bindParam(":description", $character->getDescription());
+            $stmt->bindParam(":place_of_birth", $character->getPlaceOfBirth());
+            $stmt->bindParam(":occupations", $character->getOccupation());
+            $stmt->bindParam(":fruit", $character->getFruit());
 
-        return $stmt->execute();
+            if ($stmt->execute()) {
+                return $stmt->rowCount() > 0;
+            }
+
+            return false;
+        } catch (\PDOException $exception) {
+            error_log(
+                "CharacterRepository: error creating new character - {$exception->getMessage()} \n",
+                3,
+                __DIR__ . "/../../log/error.log"
+            );
+
+            return false;
+        }
     }
 
     public function list()
     {
-        $query = "SELECT * FROM characters";
-        $stmt = $this->conn->query($query);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $query = "SELECT * FROM characters";
+            $stmt = $this->conn->query($query);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\PDOException $exception) {
+            error_log(
+                "CharacterRepository: error fetching all characters - {$exception->getMessage()} \n",
+                3,
+                __DIR__ . "/../../log/error.log"
+            );
+
+            return false;
+        }
     }
 
     public function show($id)
     {
-        $query = "SELECT * FROM characters WHERE id = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        try {
+            $query = "SELECT * FROM characters WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (\PDOException $exception) {
+            error_log(
+                "CharacterRepository: error searching for character by id - {$exception->getMessage()} \n",
+                3,
+                __DIR__ . "/../../log/error.log"
+            );
+
+            return false;
+        }
     }
 
     public function destroy($id)
     {
-        $query = "DELETE FROM characters WHERE id = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $id);
-        return $stmt->execute();
+        try {
+            $query = "DELETE FROM characters WHERE id = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":id", $id);
+
+            if ($stmt->execute()) {
+                return $stmt->rowCount() > 0;
+            }
+
+            return false;
+        } catch (\PDOException $exception) {
+            error_log(
+                "CharacterRepository: error deleting character - {$exception->getMessage()} \n",
+                3,
+                __DIR__ . "/../../log/error.log"
+            );
+
+            return false;
+        }
     }
 
     public function update(CharacterModel $character, $id)
     {
-        $query = "
-            UPDATE characters SET 
-                name = :name,
-                description = :description,
-                place_of_birth = :place_of_birth,
-                occupations = :occupations,
-                fruit = :fruit
-            WHERE id = :id
-        ";
+        try {
+            $query = "UPDATE characters SET 
+                    name = :name,
+                    description = :description,
+                    place_of_birth = :place_of_birth,
+                    occupations = :occupations,
+                    fruit = :fruit
+                WHERE id = :id
+            ";
 
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(":id", $id);
-        $stmt->bindParam(":name", $character->getName());
-        $stmt->bindParam(":description", $character->getDescription());
-        $stmt->bindParam(":place_of_birth", $character->getPlaceOfBirth());
-        $stmt->bindParam(":occupations", $character->getOccupation());
-        $stmt->bindParam(":fruit", $character->getFruit());
-        return $stmt->execute();
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":name", $character->getName());
+            $stmt->bindParam(":description", $character->getDescription());
+            $stmt->bindParam(":place_of_birth", $character->getPlaceOfBirth());
+            $stmt->bindParam(":occupations", $character->getOccupation());
+            $stmt->bindParam(":fruit", $character->getFruit());
+
+            if ($stmt->execute()) {
+                return $stmt->rowCount() > 0;
+            }
+
+            return false;
+        } catch (\PDOException $exception) {
+            error_log(
+                "CharacterRepository: error updating character - {$exception->getMessage()} \n",
+                3,
+                __DIR__ . "/../../log/error.log"
+            );
+
+            return false;
+        }
     }
 
     public function searchByName($name)
     {
-        $query = "SELECT * FROM characters WHERE name LIKE :name";
+        try {
+            $query = "SELECT * FROM characters WHERE name LIKE :name";
 
-        $stmt = $this->conn->prepare($query);
+            $stmt = $this->conn->prepare($query);
 
-        $name = "%{$name}%";
-        $stmt->bindParam(":name", $name);
-        $stmt->execute();
+            $name = "%{$name}%";
+            $stmt->bindParam(":name", $name);
+            $stmt->execute();
 
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (\PDOException $exception) {
+            error_log(
+                "CharacterRepository: error searching for character by name - {$exception->getMessage()} \n",
+                3,
+                __DIR__ . "/../../log/error.log"
+            );
+
+            return false;
+        }
     }
 }
