@@ -2,6 +2,64 @@
 
 namespace app\models;
 
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Schema(
+ *     schema="Character",
+ *     type="object",
+ *     title="Character",
+ *     description="Represents a character.",
+ *     @OA\Property(
+ *         property="id", 
+ *         type="integer", 
+ *         example=1, 
+ *         description="Unique ID of the character."
+ *     ),
+ *     @OA\Property(
+ *         property="name", 
+ *         type="string", 
+ *         example="Monkey D. Luffy", 
+ *         description="Character name."
+ *     ),
+ *     @OA\Property(
+ *         property="description", 
+ *         type="string", 
+ *         example="Captain of the Straw Hat Ship.", 
+ *         description="Character description."
+ *     ),
+ *     @OA\Property(
+ *         property="placeOfBirth", 
+ *         type="string", 
+ *         example="Foosha Village", 
+ *         description="Character's birthplace."
+ *     ),
+ *     @OA\Property(
+ *         property="occupation", 
+ *         type="string", 
+ *         example="Pirate", 
+ *         description="Character's occupation."
+ *     ),
+ *     @OA\Property(
+ *         property="fruit", 
+ *         type="string", 
+ *         example="Gomu Gomu no Mi", 
+ *         description="Devil fruit that the character ate."
+ *     ),
+ *     @OA\Property(
+ *         property="createdAt", 
+ *         type="string", format="date-time", 
+ *         example="2024-11-05T12:00:00Z", 
+ *         description="Character creation date."
+ *     ),
+ *     @OA\Property(
+ *         property="updatedAt", 
+ *         type="string", format="date-time", 
+ *         example="2024-11-05T12:00:00Z", 
+ *         description="Date the character was last updated."
+ *     )
+ * )
+ */
 class CharacterModel
 {
     private $id;

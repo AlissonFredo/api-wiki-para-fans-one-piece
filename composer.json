@@ -3,5 +3,8 @@
         "psr-4": {
             "app\\": "src"
         }
+    },
+    "require": {
+        "zircote/swagger-php": "^3.0"
     }
 }

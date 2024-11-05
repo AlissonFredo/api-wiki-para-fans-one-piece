@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\CharacterModel;
 use app\repositories\CharacterRepository;
+use OpenApi\Annotations as OA;
 
 class CharacterController
 {
@@ -77,6 +78,34 @@ class CharacterController
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/characters/list",
+     *     summary="List all characters",
+     *     tags={"Characters"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="A list of all characters.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Success in searching all characters"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 type="array",
+     *                 @OA\Items(ref="#/components/schemas/Character")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Error fetching all characters.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Error searching all characters")
+     *         )
+     *     )
+     * )
+     */
     public function list()
     {
         $response = $this->repository->list();
@@ -93,6 +122,56 @@ class CharacterController
         }
     }
 
+    /**
+     * @OA\Get(
+     *     path="/characters/show",
+     *     summary="Search character by ID",
+     *     tags={"Characters"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="query",
+     *         required=true,
+     *         description="ID of the character to be searched.",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Character found successfully.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Success searching character by id"),
+     *             @OA\Property(
+     *                 property="data",
+     *                 ref="#/components/schemas/Character"
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Validation error when searching for character.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Error searching character by id"),
+     *             @OA\Property(
+     *                 property="errors",
+     *                 type="array",
+     *                 @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(property="id", type="string", example="Id is a required attribute")
+     *                 )
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Internal error while searching for character.",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Error searching character by id")
+     *         )
+     *     )
+     * )
+     */
     public function showById($params)
     {
         if (!isset($params['id']) || $params['id'] === '') {

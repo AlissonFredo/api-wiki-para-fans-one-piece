@@ -5,7 +5,14 @@ namespace app\core;
 use app\core\Router;
 use app\controllers\CharacterController;
 use app\core\Config;
+use OpenApi\Annotations as OA;
 
+/**
+ * @OA\Info(
+ *     title="API for One Piece fans",
+ *     version="1.14.0"
+ * )
+ */
 class Main
 {
     static function initialize()
