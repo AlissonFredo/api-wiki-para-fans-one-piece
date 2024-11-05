@@ -31,7 +31,7 @@ class CharacterController
         $response = $this->repository->create($character);
 
         if ($response) {
-            http_response_code(200);
+            http_response_code(201);
             return json_encode(['message' => 'Success in creating a character']);
         } else {
             http_response_code(500);
