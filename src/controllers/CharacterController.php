@@ -25,7 +25,10 @@ class CharacterController
 
         if ($character->existsErrors()) {
             http_response_code(400);
-            return json_encode(['message' => 'Error creating a character', 'errors' => $character->getErrors()]);
+            return json_encode([
+                'message' => 'Error creating a character',
+                'errors' => $character->getErrors()
+            ]);
         }
 
         $response = $this->repository->create($character);
@@ -51,10 +54,16 @@ class CharacterController
 
         if ($character->existsErrors()) {
             http_response_code(400);
-            return json_encode(['message' => 'Error creating a character', 'errors' => $character->getErrors()]);
+            return json_encode([
+                'message' => 'Error creating a character',
+                'errors' => $character->getErrors()
+            ]);
         } elseif (!isset($params['id']) || $params['id'] === '') {
             http_response_code(400);
-            return json_encode(['message' => 'Error creating a character', 'errors' => array(['id' => 'Id is a required attribute'])]);
+            return json_encode([
+                'message' => 'Error creating a character',
+                'errors' => array(['id' => 'Id is a required attribute'])
+            ]);
         }
 
         $response = $this->repository->update($character, $params['id']);
@@ -74,7 +83,10 @@ class CharacterController
 
         if ($response !== false) {
             http_response_code(200);
-            return json_encode(['message' => 'Success in searching all characters', 'data' => $response]);
+            return json_encode([
+                'message' => 'Success in searching all characters',
+                'data' => $response
+            ]);
         } else {
             http_response_code(500);
             return json_encode(['message' => 'Error searching all characters']);
@@ -85,14 +97,20 @@ class CharacterController
     {
         if (!isset($params['id']) || $params['id'] === '') {
             http_response_code(400);
-            return json_encode(['message' => 'Error searching character by id', 'errors' => array(['id' => 'Id is a required attribute'])]);
+            return json_encode([
+                'message' => 'Error searching character by id',
+                'errors' => array(['id' => 'Id is a required attribute'])
+            ]);
         }
 
         $response = $this->repository->show($params['id']);
 
         if ($response !== false) {
             http_response_code(200);
-            return json_encode(['message' => 'Success searching character by id', 'data' => $response]);
+            return json_encode([
+                'message' => 'Success searching character by id',
+                'data' => $response
+            ]);
         } else {
             http_response_code(500);
             return json_encode(['message' => 'Error searching character by id']);
@@ -103,7 +121,10 @@ class CharacterController
     {
         if (!isset($params['id']) || $params['id'] === '') {
             http_response_code(400);
-            return json_encode(['message' => 'Error deleting a character', 'errors' => array(['id' => 'Id is a required attribute'])]);
+            return json_encode([
+                'message' => 'Error deleting a character',
+                'errors' => array(['id' => 'Id is a required attribute'])
+            ]);
         }
 
         $response = $this->repository->destroy($params['id']);
@@ -121,14 +142,20 @@ class CharacterController
     {
         if (!isset($params['name']) || $params['name'] === '') {
             http_response_code(400);
-            return json_encode(['message' => 'Error searching character by name', 'errors' => array(['name' => 'Name is a required attribute'])]);
+            return json_encode([
+                'message' => 'Error searching character by name',
+                'errors' => array(['name' => 'Name is a required attribute'])
+            ]);
         }
 
         $response = $this->repository->searchByName($params['name']);
 
         if ($response !== false) {
             http_response_code(200);
-            return json_encode(['message' => 'Success searching character by name', 'data' => $response]);
+            return json_encode([
+                'message' => 'Success searching character by name',
+                'data' => $response
+            ]);
         } else {
             http_response_code(500);
             return json_encode(['message' => 'Error searching character by name']);
