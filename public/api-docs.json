@@ -1,0 +1,195 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API for One Piece fans",
+        "version": "1.14.0"
+    },
+    "paths": {
+        "/characters/list": {
+            "get": {
+                "tags": [
+                    "Characters"
+                ],
+                "summary": "List all characters",
+                "responses": {
+                    "200": {
+                        "description": "A list of all characters.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success in searching all characters"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Character"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error fetching all characters.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error searching all characters"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/characters/show": {
+            "get": {
+                "tags": [
+                    "Characters"
+                ],
+                "summary": "Search character by ID",
+                "operationId": "fdefac030423ccbb3e4c9611b912ea50",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of the character to be searched.",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Character found successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Success searching character by id"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Character"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error when searching for character.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error searching character by id"
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "string",
+                                                        "example": "Id is a required attribute"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal error while searching for character.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Error searching character by id"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Character": {
+                "title": "Character",
+                "description": "Represents a character.",
+                "properties": {
+                    "id": {
+                        "description": "Unique ID of the character.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Character name.",
+                        "type": "string",
+                        "example": "Monkey D. Luffy"
+                    },
+                    "description": {
+                        "description": "Character description.",
+                        "type": "string",
+                        "example": "Captain of the Straw Hat Ship."
+                    },
+                    "placeOfBirth": {
+                        "description": "Character's birthplace.",
+                        "type": "string",
+                        "example": "Foosha Village"
+                    },
+                    "occupation": {
+                        "description": "Character's occupation.",
+                        "type": "string",
+                        "example": "Pirate"
+                    },
+                    "fruit": {
+                        "description": "Devil fruit that the character ate.",
+                        "type": "string",
+                        "example": "Gomu Gomu no Mi"
+                    },
+                    "createdAt": {
+                        "description": "Character creation date.",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-11-05T12:00:00Z"
+                    },
+                    "updatedAt": {
+                        "description": "Date the character was last updated.",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-11-05T12:00:00Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
