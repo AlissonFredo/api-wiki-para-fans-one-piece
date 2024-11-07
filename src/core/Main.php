@@ -4,6 +4,7 @@ namespace app\core;
 
 use app\core\Router;
 use app\controllers\CharacterController;
+use app\controllers\DocsController;
 use app\core\Config;
 use OpenApi\Annotations as OA;
 
@@ -20,6 +21,9 @@ class Main
         Config::load(__DIR__ . "/../../.env");
 
         $router = new Router();
+
+        $router->addRoute("GET", "/documentation", DocsController::class, 'docs');
+        $router->addRoute("GET", "/documentation/assets", DocsController::class, 'asset');
 
         $router->addRoute("POST", "/characters", CharacterController::class, 'create');
         $router->addRoute("PUT", "/characters", CharacterController::class, 'update');
