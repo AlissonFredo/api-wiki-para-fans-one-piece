@@ -2,11 +2,26 @@
 
 namespace app\core;
 
+use app\controllers\CharacterController;
+use app\controllers\DocsController;
+
 class Router
 {
     private $routes = [];
 
-    public function addRoute($method, $path, $controller, $action)
+    public function __construct()
+    {
+        $this->addRoute("GET", "/documentation", DocsController::class, 'docs');
+        $this->addRoute("GET", "/documentation/assets", DocsController::class, 'asset');
+        $this->addRoute("POST", "/characters", CharacterController::class, 'create');
+        $this->addRoute("PUT", "/characters", CharacterController::class, 'update');
+        $this->addRoute("GET", "/characters/list", CharacterController::class, 'list');
+        $this->addRoute("GET", "/characters/show", CharacterController::class, 'showById');
+        $this->addRoute("DELETE", "/characters", CharacterController::class, 'destroy');
+        $this->addRoute("GET", "/characters/search", CharacterController::class, 'searchByName');
+    }
+
+    private function addRoute($method, $path, $controller, $action)
     {
         $this->routes[] = [
             'method' => $method,
