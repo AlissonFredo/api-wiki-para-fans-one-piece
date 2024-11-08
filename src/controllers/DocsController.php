@@ -2,7 +2,9 @@
 
 namespace app\controllers;
 
-class DocsController
+use Controller;
+
+class DocsController extends Controller
 {
     public function docs()
     {
@@ -52,8 +54,7 @@ class DocsController
         $filename = $params['filename'] ?? null;
 
         if (!$filename) {
-            http_response_code(400);
-            return json_encode(['message' => 'Filename is a required attribute']);
+            return $this->response(400, ['message' => 'Filename is a required attribute']);
         }
 
         $path = __DIR__ . "/../../vendor/swagger-api/swagger-ui/dist/$filename";
@@ -77,8 +78,7 @@ class DocsController
 
             readfile($path);
         } else {
-            http_response_code(404);
-            return json_encode(['message' => 'File not found']);
+            return $this->response(404, ['message' => 'File not found']);
         }
     }
 }

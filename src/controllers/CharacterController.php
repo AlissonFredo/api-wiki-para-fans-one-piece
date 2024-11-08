@@ -4,9 +4,10 @@ namespace app\controllers;
 
 use app\models\CharacterModel;
 use app\repositories\CharacterRepository;
+use Controller;
 use OpenApi\Annotations as OA;
 
-class CharacterController
+class CharacterController extends Controller
 {
     private $repository;
 
@@ -80,8 +81,7 @@ class CharacterController
         $character->setFruit($request['fruit']);
 
         if ($character->existsErrors()) {
-            http_response_code(400);
-            return json_encode([
+            return $this->response(400, [
                 'message' => 'Error creating a character',
                 'errors' => $character->getErrors()
             ]);
@@ -90,11 +90,9 @@ class CharacterController
         $response = $this->repository->create($character);
 
         if ($response) {
-            http_response_code(201);
-            return json_encode(['message' => 'Success in creating a character']);
+            return $this->response(201, ['message' => 'Success in creating a character']);
         } else {
-            http_response_code(500);
-            return json_encode(['message' => 'Error creating a character']);
+            return $this->response(500, ['message' => 'Error creating a character']);
         }
     }
 
@@ -170,14 +168,12 @@ class CharacterController
         $character->setFruit($request['fruit']);
 
         if ($character->existsErrors()) {
-            http_response_code(400);
-            return json_encode([
+            return $this->response(400, [
                 'message' => 'Error creating a character',
                 'errors' => $character->getErrors()
             ]);
         } elseif (!isset($params['id']) || $params['id'] === '') {
-            http_response_code(400);
-            return json_encode([
+            return $this->response(400, [
                 'message' => 'Error creating a character',
                 'errors' => array(['id' => 'Id is a required attribute'])
             ]);
@@ -186,11 +182,9 @@ class CharacterController
         $response = $this->repository->update($character, $params['id']);
 
         if ($response) {
-            http_response_code(200);
-            return json_encode(['message' => 'Success in upgrading a character']);
+            return $this->response(200, ['message' => 'Success in upgrading a character']);
         } else {
-            http_response_code(500);
-            return json_encode(['message' => 'Error upgrading a character']);
+            return $this->response(500, ['message' => 'Error upgrading a character']);
         }
     }
 
@@ -227,14 +221,12 @@ class CharacterController
         $response = $this->repository->list();
 
         if ($response !== false) {
-            http_response_code(200);
-            return json_encode([
+            return $this->response(200, [
                 'message' => 'Success in searching all characters',
                 'data' => $response
             ]);
         } else {
-            http_response_code(500);
-            return json_encode(['message' => 'Error searching all characters']);
+            return $this->response(500, ['message' => 'Error searching all characters']);
         }
     }
 
@@ -291,8 +283,7 @@ class CharacterController
     public function showById($params)
     {
         if (!isset($params['id']) || $params['id'] === '') {
-            http_response_code(400);
-            return json_encode([
+            return $this->response(400, [
                 'message' => 'Error searching character by id',
                 'errors' => array(['id' => 'Id is a required attribute'])
             ]);
@@ -301,14 +292,12 @@ class CharacterController
         $response = $this->repository->show($params['id']);
 
         if ($response !== false) {
-            http_response_code(200);
-            return json_encode([
+            return $this->response(200, [
                 'message' => 'Success searching character by id',
                 'data' => $response
             ]);
         } else {
-            http_response_code(500);
-            return json_encode(['message' => 'Error searching character by id']);
+            return $this->response(500, ['message' => 'Error searching character by id']);
         }
     }
 
@@ -361,8 +350,7 @@ class CharacterController
     public function destroy($params)
     {
         if (!isset($params['id']) || $params['id'] === '') {
-            http_response_code(400);
-            return json_encode([
+            return $this->response(400, [
                 'message' => 'Error deleting a character',
                 'errors' => array(['id' => 'Id is a required attribute'])
             ]);
@@ -371,11 +359,9 @@ class CharacterController
         $response = $this->repository->destroy($params['id']);
 
         if ($response) {
-            http_response_code(200);
-            return json_encode(['message' => 'Success in deleting a character']);
+            return $this->response(200, ['message' => 'Success in deleting a character']);
         } else {
-            http_response_code(500);
-            return json_encode(['message' => 'Error in deleting a character']);
+            return $this->response(500, ['message' => 'Error in deleting a character']);
         }
     }
 
@@ -433,8 +419,7 @@ class CharacterController
     public function searchByName($params)
     {
         if (!isset($params['name']) || $params['name'] === '') {
-            http_response_code(400);
-            return json_encode([
+            return $this->response(400, [
                 'message' => 'Error searching character by name',
                 'errors' => array(['name' => 'Name is a required attribute'])
             ]);
@@ -443,14 +428,12 @@ class CharacterController
         $response = $this->repository->searchByName($params['name']);
 
         if ($response !== false) {
-            http_response_code(200);
-            return json_encode([
+            return $this->response(200, [
                 'message' => 'Success searching character by name',
                 'data' => $response
             ]);
         } else {
-            http_response_code(500);
-            return json_encode(['message' => 'Error searching character by name']);
+            return $this->response(500, ['message' => 'Error searching character by name']);
         }
     }
 }
