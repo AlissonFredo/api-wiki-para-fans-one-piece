@@ -2,7 +2,7 @@
     "openapi": "3.0.0",
     "info": {
         "title": "API for One Piece fans",
-        "version": "1.14.0"
+        "version": "1.14.2"
     },
     "paths": {
         "/characters/create": {
@@ -207,7 +207,7 @@
                                     "properties": {
                                         "message": {
                                             "type": "string",
-                                            "example": "Error creating a character"
+                                            "example": "Error upgrading a character"
                                         },
                                         "errors": {
                                             "type": "array",

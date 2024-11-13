@@ -9,7 +9,7 @@ use OpenApi\Annotations as OA;
 /**
  * @OA\Info(
  *     title="API for One Piece fans",
- *     version="1.14.0"
+ *     version="1.14.2"
  * )
  */
 class Main

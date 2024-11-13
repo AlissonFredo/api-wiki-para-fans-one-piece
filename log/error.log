@@ -7,3 +7,23 @@ Connection error: {"queryString":"\n                SELECT * \n                F
 Connection error: {"queryString":"\n                SELECT * \n                FROM characters \n                WHERE name LIKE '%:name%'\n            "} 
 Connection error: Cannot pass parameter 2 by reference 
 Connection error: Cannot pass parameter 2 by reference 
+[13-Nov-2024 00:22:47 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: Class 'app\controllers\Controller' not found in /var/www/api-wiki-para-fans-one-piece/src/controllers/CharacterController.php:11
+Stack trace:
+#0 /var/www/api-wiki-para-fans-one-piece/vendor/composer/ClassLoader.php(576): include()
+#1 /var/www/api-wiki-para-fans-one-piece/vendor/composer/ClassLoader.php(427): Composer\Autoload\{closure}()
+#2 [internal function]: Composer\Autoload\ClassLoader->loadClass()
+#3 /var/www/api-wiki-para-fans-one-piece/src/core/Router.php(38): spl_autoload_call()
+#4 /var/www/api-wiki-para-fans-one-piece/src/core/Main.php(24): app\core\Router->dispatch()
+#5 /var/www/api-wiki-para-fans-one-piece/public/index.php(11): app\core\Main::initialize()
+#6 {main}
+  thrown in /var/www/api-wiki-para-fans-one-piece/src/controllers/CharacterController.php on line 11
+[13-Nov-2024 00:33:06 America/Sao_Paulo] PHP Notice:  Only variables should be passed by reference in /var/www/api-wiki-para-fans-one-piece/src/repositories/CharacterRepository.php on line 38
+[13-Nov-2024 00:33:06 America/Sao_Paulo] PHP Notice:  Only variables should be passed by reference in /var/www/api-wiki-para-fans-one-piece/src/repositories/CharacterRepository.php on line 39
+[13-Nov-2024 00:33:06 America/Sao_Paulo] PHP Notice:  Only variables should be passed by reference in /var/www/api-wiki-para-fans-one-piece/src/repositories/CharacterRepository.php on line 40
+[13-Nov-2024 00:33:06 America/Sao_Paulo] PHP Notice:  Only variables should be passed by reference in /var/www/api-wiki-para-fans-one-piece/src/repositories/CharacterRepository.php on line 41
+[13-Nov-2024 00:33:06 America/Sao_Paulo] PHP Notice:  Only variables should be passed by reference in /var/www/api-wiki-para-fans-one-piece/src/repositories/CharacterRepository.php on line 42
+[13-Nov-2024 00:33:28 America/Sao_Paulo] PHP Notice:  Only variables should be passed by reference in /var/www/api-wiki-para-fans-one-piece/src/repositories/CharacterRepository.php on line 38
+[13-Nov-2024 00:33:28 America/Sao_Paulo] PHP Notice:  Only variables should be passed by reference in /var/www/api-wiki-para-fans-one-piece/src/repositories/CharacterRepository.php on line 39
+[13-Nov-2024 00:33:28 America/Sao_Paulo] PHP Notice:  Only variables should be passed by reference in /var/www/api-wiki-para-fans-one-piece/src/repositories/CharacterRepository.php on line 40
+[13-Nov-2024 00:33:28 America/Sao_Paulo] PHP Notice:  Only variables should be passed by reference in /var/www/api-wiki-para-fans-one-piece/src/repositories/CharacterRepository.php on line 41
+[13-Nov-2024 00:33:28 America/Sao_Paulo] PHP Notice:  Only variables should be passed by reference in /var/www/api-wiki-para-fans-one-piece/src/repositories/CharacterRepository.php on line 42

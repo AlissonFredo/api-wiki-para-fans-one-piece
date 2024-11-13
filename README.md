@@ -5,3 +5,7 @@
 - search character by id
 - delete character by id
 - search character by name
+
+## To generate Swagger
+- php vendor/bin/openapi --output public/api-docs.json src/
+
