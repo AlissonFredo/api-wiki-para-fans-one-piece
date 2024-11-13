@@ -1,0 +1,39 @@
+<?php
+
+namespace app\services;
+
+use app\models\CharacterModel;
+use app\repositories\CharacterRepository;
+
+class CharacterService
+{
+    private $repository;
+
+    public function __construct()
+    {
+        $this->repository = new CharacterRepository;
+    }
+
+    public function create($request)
+    {
+        $character = new CharacterModel();
+
+        $character->setName($request['name']);
+        $character->setDescription($request['description']);
+        $character->setPlaceOfBirth($request['placeOfBirth']);
+        $character->setOccupation($request['occupation']);
+        $character->setFruit($request['fruit']);
+
+        if ($character->existsErrors()) {
+            return ['code' => 400, 'errors' => $character->getErrors()];
+        }
+
+        $response = $this->repository->create($character);
+
+        if ($response) {
+            return ['code' => 201];
+        }
+
+        return ['code' => 500];
+    }
+}

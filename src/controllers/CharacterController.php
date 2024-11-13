@@ -4,16 +4,19 @@ namespace app\controllers;
 
 use app\models\CharacterModel;
 use app\repositories\CharacterRepository;
-use Controller;
+use app\services\CharacterService;
+use app\controllers\Controller;
 use OpenApi\Annotations as OA;
 
 class CharacterController extends Controller
 {
     private $repository;
+    private $service;
 
     public function __construct()
     {
         $this->repository = new CharacterRepository;
+        $this->service = new CharacterService;
     }
 
     /**
@@ -72,28 +75,15 @@ class CharacterController extends Controller
      */
     public function create($request)
     {
-        $character = new CharacterModel();
+        $response = $this->service->create($request);
 
-        $character->setName($request['name']);
-        $character->setDescription($request['description']);
-        $character->setPlaceOfBirth($request['placeOfBirth']);
-        $character->setOccupation($request['occupation']);
-        $character->setFruit($request['fruit']);
-
-        if ($character->existsErrors()) {
-            return $this->response(400, [
-                'message' => 'Error creating a character',
-                'errors' => $character->getErrors()
-            ]);
+        if ($response['code'] == 201) {
+            return $this->response($response['code'], ['message' => 'Success in creating a character']);
+        } elseif ($response['code'] == 400) {
+            return $this->response($response['code'], ['message' => 'Error creating a character', 'errors' => $response['errors']]);
         }
 
-        $response = $this->repository->create($character);
-
-        if ($response) {
-            return $this->response(201, ['message' => 'Success in creating a character']);
-        } else {
-            return $this->response(500, ['message' => 'Error creating a character']);
-        }
+        return $this->response(500, ['message' => 'Error creating a character']);
     }
 
     /**
@@ -133,7 +123,7 @@ class CharacterController extends Controller
      *         description="Validation error when updating character.",
      *         @OA\JsonContent(
      *             type="object",
-     *             @OA\Property(property="message", type="string", example="Error creating a character"),
+     *             @OA\Property(property="message", type="string", example="Error upgrading a character"),
      *             @OA\Property(
      *                 property="errors",
      *                 type="array",
@@ -169,12 +159,12 @@ class CharacterController extends Controller
 
         if ($character->existsErrors()) {
             return $this->response(400, [
-                'message' => 'Error creating a character',
+                'message' => 'Error upgrading a character',
                 'errors' => $character->getErrors()
             ]);
         } elseif (!isset($params['id']) || $params['id'] === '') {
             return $this->response(400, [
-                'message' => 'Error creating a character',
+                'message' => 'Error upgrading a character',
                 'errors' => array(['id' => 'Id is a required attribute'])
             ]);
         }

@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use Controller;
+use app\controllers\Controller;
 
 class DocsController extends Controller
 {
