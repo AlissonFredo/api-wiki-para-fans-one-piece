@@ -196,16 +196,18 @@ class CharacterController extends Controller
      */
     public function list()
     {
-        $response = $this->repository->list();
+        $response = $this->service->list();
 
-        if ($response !== false) {
-            return $this->response(200, [
+        if ($response['code'] == 200) {
+            return $this->response($response['code'], [
                 'message' => 'Success in searching all characters',
-                'data' => $response
+                'data' => $response['data']
             ]);
-        } else {
-            return $this->response(500, ['message' => 'Error searching all characters']);
         }
+
+        return $this->response($response['code'], [
+            'message' => 'Error searching all characters'
+        ]);
     }
 
     /**

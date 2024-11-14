@@ -61,4 +61,15 @@ class CharacterService
 
         return ['code' => 500];
     }
+
+    public function list()
+    {
+        $response = $this->repository->list();
+
+        if ($response) {
+            return ['code' => 200, 'data' => $response];
+        }
+
+        return ['code' => 500];
+    }
 }
