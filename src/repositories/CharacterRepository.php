@@ -16,7 +16,7 @@ class CharacterRepository
         $this->conn = $database->getConnection();
     }
 
-    public function create(CharacterModel $character)
+    public function create($character)
     {
         try {
             $query = "INSERT INTO characters (
@@ -35,11 +35,11 @@ class CharacterRepository
 
             $stmt = $this->conn->prepare($query);
 
-            $stmt->bindParam(":name", $character->getName());
-            $stmt->bindParam(":description", $character->getDescription());
-            $stmt->bindParam(":place_of_birth", $character->getPlaceOfBirth());
-            $stmt->bindParam(":occupations", $character->getOccupation());
-            $stmt->bindParam(":fruit", $character->getFruit());
+            $stmt->bindValue(":name", $character->getName());
+            $stmt->bindValue(":description", $character->getDescription());
+            $stmt->bindValue(":place_of_birth", $character->getPlaceOfBirth());
+            $stmt->bindValue(":occupations", $character->getOccupation());
+            $stmt->bindValue(":fruit", $character->getFruit());
 
             if ($stmt->execute()) {
                 return $stmt->rowCount() > 0;
@@ -79,7 +79,7 @@ class CharacterRepository
         try {
             $query = "SELECT * FROM characters WHERE id = :id";
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(':id', $id);
+            $stmt->bindValue(':id', $id);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (\PDOException $exception) {
@@ -98,7 +98,7 @@ class CharacterRepository
         try {
             $query = "DELETE FROM characters WHERE id = :id";
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(":id", $id);
+            $stmt->bindValue(":id", $id);
 
             if ($stmt->execute()) {
                 return $stmt->rowCount() > 0;
@@ -116,7 +116,7 @@ class CharacterRepository
         }
     }
 
-    public function update(CharacterModel $character, $id)
+    public function update($character, $id)
     {
         try {
             $query = "UPDATE characters SET 
@@ -129,18 +129,14 @@ class CharacterRepository
             ";
 
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(":id", $id);
-            $stmt->bindParam(":name", $character->getName());
-            $stmt->bindParam(":description", $character->getDescription());
-            $stmt->bindParam(":place_of_birth", $character->getPlaceOfBirth());
-            $stmt->bindParam(":occupations", $character->getOccupation());
-            $stmt->bindParam(":fruit", $character->getFruit());
+            $stmt->bindValue(":id", $id);
+            $stmt->bindValue(":name", $character->getName());
+            $stmt->bindValue(":description", $character->getDescription());
+            $stmt->bindValue(":place_of_birth", $character->getPlaceOfBirth());
+            $stmt->bindValue(":occupations", $character->getOccupation());
+            $stmt->bindValue(":fruit", $character->getFruit());
 
-            if ($stmt->execute()) {
-                return $stmt->rowCount() > 0;
-            }
-
-            return false;
+            return $stmt->execute();
         } catch (\PDOException $exception) {
             error_log(
                 "CharacterRepository: error updating character - {$exception->getMessage()} \n",
@@ -160,7 +156,7 @@ class CharacterRepository
             $stmt = $this->conn->prepare($query);
 
             $name = "%{$name}%";
-            $stmt->bindParam(":name", $name);
+            $stmt->bindValue(":name", $name);
             $stmt->execute();
 
             return $stmt->fetchAll(PDO::FETCH_ASSOC);

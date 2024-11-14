@@ -36,4 +36,29 @@ class CharacterService
 
         return ['code' => 500];
     }
+
+    public function update($request, $characterId)
+    {
+        $character = new CharacterModel();
+
+        $character->setName($request['name']);
+        $character->setDescription($request['description']);
+        $character->setPlaceOfBirth($request['placeOfBirth']);
+        $character->setOccupation($request['occupation']);
+        $character->setFruit($request['fruit']);
+
+        if ($character->existsErrors()) {
+            return ['code' => 400, 'errors' => $character->getErrors()];
+        } elseif (!isset($characterId) || $characterId === '') {
+            return ['code' => 400, 'errors' => array(['id' => 'Id is a required attribute'])];
+        }
+
+        $response = $this->repository->update($character, $characterId);
+
+        if ($response) {
+            return ['code' => 200];
+        }
+
+        return ['code' => 500];
+    }
 }

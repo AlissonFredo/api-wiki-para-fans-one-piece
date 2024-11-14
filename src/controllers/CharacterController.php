@@ -80,7 +80,10 @@ class CharacterController extends Controller
         if ($response['code'] == 201) {
             return $this->response($response['code'], ['message' => 'Success in creating a character']);
         } elseif ($response['code'] == 400) {
-            return $this->response($response['code'], ['message' => 'Error creating a character', 'errors' => $response['errors']]);
+            return $this->response($response['code'], [
+                'message' => 'Error creating a character',
+                'errors' => $response['errors']
+            ]);
         }
 
         return $this->response(500, ['message' => 'Error creating a character']);
@@ -149,33 +152,18 @@ class CharacterController extends Controller
      */
     public function update($request, $params)
     {
-        $character = new CharacterModel();
+        $response = $this->service->update($request, $params['id']);
 
-        $character->setName($request['name']);
-        $character->setDescription($request['description']);
-        $character->setPlaceOfBirth($request['placeOfBirth']);
-        $character->setOccupation($request['occupation']);
-        $character->setFruit($request['fruit']);
-
-        if ($character->existsErrors()) {
-            return $this->response(400, [
+        if ($response['code'] == 200) {
+            return $this->response($response['code'], ['message' => 'Success in upgrading a character']);
+        } elseif ($response['code'] == 400) {
+            return $this->response($response['code'], [
                 'message' => 'Error upgrading a character',
-                'errors' => $character->getErrors()
-            ]);
-        } elseif (!isset($params['id']) || $params['id'] === '') {
-            return $this->response(400, [
-                'message' => 'Error upgrading a character',
-                'errors' => array(['id' => 'Id is a required attribute'])
+                'errors' => $response['errors']
             ]);
         }
 
-        $response = $this->repository->update($character, $params['id']);
-
-        if ($response) {
-            return $this->response(200, ['message' => 'Success in upgrading a character']);
-        } else {
-            return $this->response(500, ['message' => 'Error upgrading a character']);
-        }
+        return $this->response($response['code'], ['message' => 'Error upgrading a character']);
     }
 
     /**
