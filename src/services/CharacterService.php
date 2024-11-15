@@ -87,4 +87,22 @@ class CharacterService
 
         return ['code' => 500];
     }
+
+    public function destroy($id)
+    {
+        if (!isset($id) || $id === '') {
+            return [
+                'code' => 400,
+                'errors' => array(['id' => 'Id is a required attribute'])
+            ];
+        }
+
+        $response = $this->repository->destroy($id);
+
+        if ($response) {
+            return ['code' => 200, 'data' => $response];
+        }
+
+        return ['code' => 500];
+    }
 }

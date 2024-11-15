@@ -327,20 +327,22 @@ class CharacterController extends Controller
      */
     public function destroy($params)
     {
-        if (!isset($params['id']) || $params['id'] === '') {
-            return $this->response(400, [
+        $response = $this->service->destroy($params['id']);
+
+        if ($response['code'] == 200) {
+            return $this->response($response['code'], [
+                'message' => 'Success in deleting a character'
+            ]);
+        } elseif ($response['code'] == 400) {
+            return $this->response($response['code'], [
                 'message' => 'Error deleting a character',
-                'errors' => array(['id' => 'Id is a required attribute'])
+                'errors' => $response['errors']
             ]);
         }
 
-        $response = $this->repository->destroy($params['id']);
-
-        if ($response) {
-            return $this->response(200, ['message' => 'Success in deleting a character']);
-        } else {
-            return $this->response(500, ['message' => 'Error in deleting a character']);
-        }
+        return $this->response($response['code'], [
+            'message' => 'Error in deleting a character'
+        ]);
     }
 
     /**
