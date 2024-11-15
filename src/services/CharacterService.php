@@ -105,4 +105,22 @@ class CharacterService
 
         return ['code' => 500];
     }
+
+    public function searchByName($name)
+    {
+        if (!isset($name) || $name === '') {
+            return [
+                'code' => 400,
+                'errors' => array(['name' => 'Name is a required attribute'])
+            ];
+        }
+
+        $response = $this->repository->searchByName($name);
+
+        if ($response) {
+            return ['code' => 200, 'data' => $response];
+        }
+
+        return ['code' => 500];
+    }
 }

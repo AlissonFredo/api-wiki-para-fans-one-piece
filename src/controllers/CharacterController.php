@@ -398,22 +398,22 @@ class CharacterController extends Controller
      */
     public function searchByName($params)
     {
-        if (!isset($params['name']) || $params['name'] === '') {
-            return $this->response(400, [
-                'message' => 'Error searching character by name',
-                'errors' => array(['name' => 'Name is a required attribute'])
-            ]);
-        }
+        $response = $this->service->searchByName($params['name']);
 
-        $response = $this->repository->searchByName($params['name']);
-
-        if ($response !== false) {
-            return $this->response(200, [
+        if ($response['code'] == 200) {
+            return $this->response($response['code'], [
                 'message' => 'Success searching character by name',
-                'data' => $response
+                'data' => $response['data']
             ]);
-        } else {
-            return $this->response(500, ['message' => 'Error searching character by name']);
+        } elseif ($response['code'] == 400) {
+            return $this->response($response['code'], [
+                'message' => 'Error searching character by name',
+                'errors' => $response['errors']
+            ]);
         }
+
+        return $this->response($response['code'], [
+            'message' => 'Error searching character by name'
+        ]);
     }
 }

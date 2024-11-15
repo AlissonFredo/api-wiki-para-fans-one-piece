@@ -87,3 +87,9 @@ Stack trace:
 [13-Nov-2024 22:22:06 America/Sao_Paulo] PHP Notice:  Only variables should be passed by reference in /var/www/api-wiki-para-fans-one-piece/src/repositories/CharacterRepository.php on line 135
 [13-Nov-2024 22:22:06 America/Sao_Paulo] PHP Notice:  Only variables should be passed by reference in /var/www/api-wiki-para-fans-one-piece/src/repositories/CharacterRepository.php on line 136
 [13-Nov-2024 22:22:06 America/Sao_Paulo] PHP Notice:  Only variables should be passed by reference in /var/www/api-wiki-para-fans-one-piece/src/repositories/CharacterRepository.php on line 137
+[14-Nov-2024 22:08:49 America/Sao_Paulo] PHP Notice:  Trying to access array offset on value of type null in /var/www/api-wiki-para-fans-one-piece/src/controllers/CharacterController.php on line 403
+[14-Nov-2024 22:08:49 America/Sao_Paulo] PHP Notice:  Trying to access array offset on value of type null in /var/www/api-wiki-para-fans-one-piece/src/controllers/CharacterController.php on line 408
+[14-Nov-2024 22:08:49 America/Sao_Paulo] PHP Notice:  Trying to access array offset on value of type null in /var/www/api-wiki-para-fans-one-piece/src/controllers/CharacterController.php on line 415
+[14-Nov-2024 22:09:27 America/Sao_Paulo] PHP Notice:  Trying to access array offset on value of type null in /var/www/api-wiki-para-fans-one-piece/src/controllers/CharacterController.php on line 403
+[14-Nov-2024 22:09:27 America/Sao_Paulo] PHP Notice:  Trying to access array offset on value of type null in /var/www/api-wiki-para-fans-one-piece/src/controllers/CharacterController.php on line 408
+[14-Nov-2024 22:09:27 America/Sao_Paulo] PHP Notice:  Trying to access array offset on value of type null in /var/www/api-wiki-para-fans-one-piece/src/controllers/CharacterController.php on line 415
