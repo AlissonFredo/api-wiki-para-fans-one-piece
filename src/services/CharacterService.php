@@ -72,4 +72,19 @@ class CharacterService
 
         return ['code' => 500];
     }
+
+    public function showById($id)
+    {
+        if (!isset($id) || $id === '') {
+            return ['code' => 400, 'errors' => array(['id' => 'Id is a required attribute'])];
+        }
+
+        $response = $this->repository->show($id);
+
+        if ($response) {
+            return ['code' => 200, 'data' => $response];
+        }
+
+        return ['code' => 500];
+    }
 }

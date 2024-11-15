@@ -262,23 +262,21 @@ class CharacterController extends Controller
      */
     public function showById($params)
     {
-        if (!isset($params['id']) || $params['id'] === '') {
-            return $this->response(400, [
-                'message' => 'Error searching character by id',
-                'errors' => array(['id' => 'Id is a required attribute'])
-            ]);
-        }
+        $response = $this->service->showById($params['id']);
 
-        $response = $this->repository->show($params['id']);
-
-        if ($response !== false) {
-            return $this->response(200, [
+        if ($response['code'] == 200) {
+            return $this->response($response['code'], [
                 'message' => 'Success searching character by id',
-                'data' => $response
+                'data' => $response['data']
             ]);
-        } else {
-            return $this->response(500, ['message' => 'Error searching character by id']);
+        } elseif ($response['code'] == 400) {
+            return $this->response($response['code'], [
+                'message' => 'Error searching character by id',
+                'errors' => $response['errors']
+            ]);
         }
+
+        return $this->response($response['code'], ['message' => 'Error searching character by id']);
     }
 
     /**
