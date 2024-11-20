@@ -55,7 +55,6 @@ class Router
                 }
 
                 if ($response !== null) {
-                    header('Content-Type: application/json');
                     echo $response;
                 }
 

@@ -8,8 +8,6 @@ class DocsController extends Controller
 {
     public function docs()
     {
-        header('Content-Type: text/html');
-
         $html = file_get_contents(__DIR__ . '/../../vendor/swagger-api/swagger-ui/dist/index.html');
         $html = preg_replace('/<link\b[^>]*>(.*?)<\/link>/is', '', $html);
         $html = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $html);
@@ -45,8 +43,7 @@ class DocsController extends Controller
         $html = preg_replace('/<head\b[^>]*>/is', '$0' . $customLinks, $html, 1);
         $html = preg_replace('/<\/body>/is', $customScripts . '$0', $html, 1);
 
-        echo $html;
-        exit;
+        return $this->response(200, $html, "text/html");
     }
 
     public function asset($params)
@@ -62,21 +59,21 @@ class DocsController extends Controller
         if (file_exists($path)) {
             $extension = pathinfo($path, PATHINFO_EXTENSION);
 
+            $header = "text/plain";
+
             switch ($extension) {
                 case 'css':
-                    header('Content-Type: text/css');
+                    $header = "text/css";
                     break;
                 case 'js':
-                    header('Content-Type: application/javascript');
+                    $header = "application/javascript";
                     break;
                 case 'png':
-                    header('Content-Type: image/png');
+                    $header = "image/png";
                     break;
-                default:
-                    header('Content-Type: text/plain');
             }
 
-            readfile($path);
+            return $this->response(200, $path, $header);
         } else {
             return $this->response(404, ['message' => 'File not found']);
         }
