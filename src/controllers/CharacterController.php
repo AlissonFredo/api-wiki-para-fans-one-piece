@@ -2,20 +2,16 @@
 
 namespace app\controllers;
 
-use app\models\CharacterModel;
-use app\repositories\CharacterRepository;
 use app\services\CharacterService;
 use app\controllers\Controller;
 use OpenApi\Annotations as OA;
 
 class CharacterController extends Controller
 {
-    private $repository;
     private $service;
 
     public function __construct()
     {
-        $this->repository = new CharacterRepository;
         $this->service = new CharacterService;
     }
 
