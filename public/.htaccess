@@ -1,6 +1,10 @@
 RewriteEngine On
 
-# Redirecionar todas as outras requisições para index.php
+# Allow direct access to the api-docs.json file
+RewriteCond %{REQUEST_URI} ^/api-docs\.json$ [NC]
+RewriteRule ^ - [L]
+
+# Redirect all other requests to index.php
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php [QSA,L]
