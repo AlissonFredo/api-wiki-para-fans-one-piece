@@ -1,0 +1,14 @@
+CREATE DATABASE IF NOT EXISTS db_api_wiki_one_piece;
+
+USE db_api_wiki_one_piece;
+
+CREATE TABLE characters (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    place_of_birth VARCHAR(255) NOT NULL,
+    occupations VARCHAR(255) NOT NULL,
+    fruit VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
