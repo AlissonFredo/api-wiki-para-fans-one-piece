@@ -3,79 +3,35 @@
 namespace app\controllers;
 
 use app\controllers\Controller;
+use app\services\DocsService;
 
 class DocsController extends Controller
 {
+    private $service;
+
+    public function __construct()
+    {
+        $this->service = new DocsService;
+    }
+
     public function docs()
     {
-        $html = file_get_contents(__DIR__ . '/../../vendor/swagger-api/swagger-ui/dist/index.html');
-        $html = preg_replace('/<link\b[^>]*>(.*?)<\/link>/is', '', $html);
-        $html = preg_replace('/<script\b[^>]*>(.*?)<\/script>/is', '', $html);
+        $response = $this->service->docs();
 
-        $customLinks = "
-            <link rel='stylesheet' href='/documentation/assets?filename=swagger-ui.css'>
-            <link rel='stylesheet' href='/documentation/assets?filename=index.css'>
-            <link rel='icon' type='image/png' href='/documentation/assets?filename=favicon-32x32.png' sizes='32x32' />
-            <link rel='icon' type='image/png' href='/documentation/assets?filename=favicon-16x16.png' sizes='16x16' />
-        ";
-
-        $customScripts = "
-            <script src='/documentation/assets?filename=swagger-ui-bundle.js'></script>
-            <script src='/documentation/assets?filename=swagger-ui-standalone-preset.js'></script>
-            <script src='/documentation/assets?filename=swagger-initializer.js'></script>
-            <script>
-                window.onload = function() {
-                    const ui = SwaggerUIBundle({
-                        url: '/api-docs.json', // Certifique-se de que o `swagger.json` está disponível neste caminho
-                        dom_id: '#swagger-ui',
-                        deepLinking: true,
-                        presets: [
-                            SwaggerUIBundle.presets.apis,
-                            SwaggerUIStandalonePreset
-                        ],
-                        layout: 'StandaloneLayout'
-                    });
-                    window.ui = ui;
-                };
-            </script>
-        ";
-
-        $html = preg_replace('/<head\b[^>]*>/is', '$0' . $customLinks, $html, 1);
-        $html = preg_replace('/<\/body>/is', $customScripts . '$0', $html, 1);
-
-        return $this->response(200, $html, "text/html");
+        return $this->response($response['code'], $response['data'], $response['header']);
     }
 
     public function asset($params)
     {
-        $filename = $params['filename'] ?? null;
+        $response = $this->service->asset($params['filename']);
 
-        if (!$filename) {
-            return $this->response(400, ['message' => 'Filename is a required attribute']);
+        if ($response['code'] == 400 || $response['code'] == 404) {
+            return $this->response($response['code'], [
+                'message' => 'Error searching asset ',
+                'errors' => $response['errors']
+            ]);
         }
 
-        $path = __DIR__ . "/../../vendor/swagger-api/swagger-ui/dist/$filename";
-
-        if (file_exists($path)) {
-            $extension = pathinfo($path, PATHINFO_EXTENSION);
-
-            $header = "text/plain";
-
-            switch ($extension) {
-                case 'css':
-                    $header = "text/css";
-                    break;
-                case 'js':
-                    $header = "application/javascript";
-                    break;
-                case 'png':
-                    $header = "image/png";
-                    break;
-            }
-
-            return $this->response(200, $path, $header);
-        } else {
-            return $this->response(404, ['message' => 'File not found']);
-        }
+        return $this->response($response['code'], $response['data'], $response['header']);
     }
 }
