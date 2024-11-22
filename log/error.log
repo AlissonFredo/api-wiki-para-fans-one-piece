@@ -93,3 +93,4 @@ Stack trace:
 [14-Nov-2024 22:09:27 America/Sao_Paulo] PHP Notice:  Trying to access array offset on value of type null in /var/www/api-wiki-para-fans-one-piece/src/controllers/CharacterController.php on line 403
 [14-Nov-2024 22:09:27 America/Sao_Paulo] PHP Notice:  Trying to access array offset on value of type null in /var/www/api-wiki-para-fans-one-piece/src/controllers/CharacterController.php on line 408
 [14-Nov-2024 22:09:27 America/Sao_Paulo] PHP Notice:  Trying to access array offset on value of type null in /var/www/api-wiki-para-fans-one-piece/src/controllers/CharacterController.php on line 415
+Connection error: SQLSTATE[HY000] [1698] Access denied for user ''@'localhost'
