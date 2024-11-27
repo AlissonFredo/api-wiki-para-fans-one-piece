@@ -45,6 +45,10 @@ class CharacterService
 
     public function update($request, $characterId)
     {
+        if (!isset($characterId) || $characterId === '') {
+            return ['code' => 400, 'errors' => array(['id' => 'Id is a required attribute'])];
+        }
+
         $character = new CharacterModel();
 
         $character->setName($request['name']);
@@ -55,17 +59,19 @@ class CharacterService
 
         if ($character->existsErrors()) {
             return ['code' => 400, 'errors' => $character->getErrors()];
-        } elseif (!isset($characterId) || $characterId === '') {
-            return ['code' => 400, 'errors' => array(['id' => 'Id is a required attribute'])];
         }
 
-        $response = $this->repository->update($character, $characterId);
-
-        if ($response) {
-            return ['code' => 200];
+        if (!$this->repository->update($character, $characterId)) {
+            return ['code' => 500];
         }
 
-        return ['code' => 500];
+        $response = $this->repository->show($characterId);
+
+        if (!$response) {
+            return ['code' => 500];
+        }
+
+        return ['code' => 200, 'data' => $response->toArray()];
     }
 
     public function list()

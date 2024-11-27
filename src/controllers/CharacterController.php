@@ -157,7 +157,10 @@ class CharacterController extends Controller
         $response = $this->service->update($request, $params['id']);
 
         if ($response['code'] == 200) {
-            return $this->response($response['code'], ['message' => 'Success in upgrading a character']);
+            return $this->response($response['code'], [
+                'message' => 'Success in upgrading a character',
+                'data' => $response['data']
+            ]);
         } elseif ($response['code'] == 400) {
             return $this->response($response['code'], [
                 'message' => 'Error upgrading a character',
