@@ -98,18 +98,7 @@ class CharacterRepository
                 return false;
             }
 
-            $character = new CharacterModel();
-
-            $character->setId($result['id']);
-            $character->setName($result['name']);
-            $character->setDescription($result['description']);
-            $character->setPlaceOfBirth($result['place_of_birth']);
-            $character->setOccupation($result['occupations']);
-            $character->setFruit($result['fruit']);
-            $character->setCreatedAt($result['created_at']);
-            $character->setUpdatedAt($result['updated_at']);
-
-            return $character;
+            return $this->toCharacter($result);
         } catch (\PDOException $exception) {
             error_log(
                 "CharacterRepository: error searching for character by id - {$exception->getMessage()} \n",
