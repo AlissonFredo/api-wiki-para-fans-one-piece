@@ -31,7 +31,7 @@ class CharacterService
         $response = $this->repository->create($character);
 
         if ($response) {
-            return ['code' => 201, 'data' => $response];
+            return ['code' => 201, 'data' => $response->toArray()];
         }
 
         return ['code' => 500];
@@ -82,7 +82,7 @@ class CharacterService
         $response = $this->repository->show($id);
 
         if ($response) {
-            return ['code' => 200, 'data' => $response];
+            return ['code' => 200, 'data' => $response->toArray()];
         }
 
         return ['code' => 500];
