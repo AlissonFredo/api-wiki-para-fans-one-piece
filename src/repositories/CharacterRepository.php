@@ -174,7 +174,15 @@ class CharacterRepository
             $stmt->bindValue(":name", $name);
             $stmt->execute();
 
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (count($results) == 0) {
+                return $results;
+            }
+
+            $results = array_map(fn($result) => $this->toCharacter($result), $results);
+
+            return $results;
         } catch (\PDOException $exception) {
             error_log(
                 "CharacterRepository: error searching for character by name - {$exception->getMessage()} \n",
