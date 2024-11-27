@@ -64,7 +64,16 @@ class CharacterRepository
         try {
             $query = "SELECT * FROM characters";
             $stmt = $this->conn->query($query);
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if (count($results) == 0) {
+                return $results;
+            }
+
+            $results = array_map(fn($result) => $this->toCharacter($result), $results);
+
+            return $results;
         } catch (\PDOException $exception) {
             error_log(
                 "CharacterRepository: error fetching all characters - {$exception->getMessage()} \n",
@@ -188,5 +197,21 @@ class CharacterRepository
 
             return false;
         }
+    }
+
+    private function toCharacter($array)
+    {
+        $character = new CharacterModel();
+
+        $character->setId($array['id']);
+        $character->setName($array['name']);
+        $character->setDescription($array['description']);
+        $character->setPlaceOfBirth($array['place_of_birth']);
+        $character->setOccupation($array['occupations']);
+        $character->setFruit($array['fruit']);
+        $character->setCreatedAt($array['created_at']);
+        $character->setUpdatedAt($array['updated_at']);
+
+        return $character;
     }
 }

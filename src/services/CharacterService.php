@@ -66,11 +66,15 @@ class CharacterService
     {
         $response = $this->repository->list();
 
-        if ($response) {
-            return ['code' => 200, 'data' => $response];
+        if (!$response) {
+            return ['code' => 500];
         }
 
-        return ['code' => 500];
+        if (count($response) > 0) {
+            $response = array_map(fn($item) => $item->toArray(), $response);
+        }
+
+        return ['code' => 200, 'data' => $response];
     }
 
     public function showById($id)
