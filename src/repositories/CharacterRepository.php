@@ -45,9 +45,7 @@ class CharacterRepository
                 return false;
             }
 
-            $idNewCharacter = $this->conn->lastInsertId();
-
-            return $this->show($idNewCharacter);
+            return $this->conn->lastInsertId();
         } catch (\PDOException $exception) {
             error_log(
                 "CharacterRepository: error creating new character - {$exception->getMessage()} \n",

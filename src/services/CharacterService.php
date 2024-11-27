@@ -28,13 +28,19 @@ class CharacterService
             return ['code' => 400, 'errors' => $character->getErrors()];
         }
 
-        $response = $this->repository->create($character);
+        $characterId = $this->repository->create($character);
 
-        if ($response) {
-            return ['code' => 201, 'data' => $response->toArray()];
+        if (!$characterId) {
+            return ['code' => 500];
         }
 
-        return ['code' => 500];
+        $response = $this->repository->show($characterId);
+
+        if (!$response) {
+            return ['code' => 500];
+        }
+
+        return ['code' => 201, 'data' => $response->toArray()];
     }
 
     public function update($request, $characterId)
