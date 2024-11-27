@@ -41,11 +41,13 @@ class CharacterRepository
             $stmt->bindValue(":occupations", $character->getOccupation());
             $stmt->bindValue(":fruit", $character->getFruit());
 
-            if ($stmt->execute()) {
-                return $stmt->rowCount() > 0;
+            if (!$stmt->execute()) {
+                return false;
             }
 
-            return false;
+            $idNewCharacter = $this->conn->lastInsertId();
+
+            return $this->show($idNewCharacter);
         } catch (\PDOException $exception) {
             error_log(
                 "CharacterRepository: error creating new character - {$exception->getMessage()} \n",

@@ -74,7 +74,13 @@ class CharacterController extends Controller
         $response = $this->service->create($request);
 
         if ($response['code'] == 201) {
-            return $this->response($response['code'], ['message' => 'Success in creating a character']);
+            return $this->response(
+                $response['code'],
+                [
+                    'message' => 'Success in creating a character',
+                    'data' => $response['data']
+                ]
+            );
         } elseif ($response['code'] == 400) {
             return $this->response($response['code'], [
                 'message' => 'Error creating a character',

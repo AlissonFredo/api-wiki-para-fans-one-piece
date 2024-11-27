@@ -31,7 +31,7 @@ class CharacterService
         $response = $this->repository->create($character);
 
         if ($response) {
-            return ['code' => 201];
+            return ['code' => 201, 'data' => $response];
         }
 
         return ['code' => 500];
