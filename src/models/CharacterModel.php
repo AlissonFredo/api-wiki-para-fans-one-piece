@@ -175,9 +175,19 @@ class CharacterModel
         return $this->createdAt;
     }
 
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 
     public function existsErrors()
@@ -190,13 +200,27 @@ class CharacterModel
         return $this->errors;
     }
 
+    public function toArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'placeOfBirth' => $this->placeOfBirth,
+            'occupation' => $this->occupation,
+            'fruit' => $this->fruit ?? '',
+            'createdAt' => $this->createdAt,
+            'updatedAt' => $this->updatedAt
+        ];
+    }
+
     public function __toString()
     {
         $fruit = $this->fruit ?? '';
 
         return "Character {
             id={$this->id},
-            nome={$this->name}
+            name={$this->name}
             description={$this->description},
             placeOfBirth={$this->placeOfBirth},
             occupation={$this->occupation},
