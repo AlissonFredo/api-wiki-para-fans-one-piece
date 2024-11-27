@@ -83,7 +83,24 @@ class CharacterRepository
             $stmt = $this->conn->prepare($query);
             $stmt->bindValue(':id', $id);
             $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$result) {
+                return false;
+            }
+
+            $character = new CharacterModel();
+
+            $character->setId($result['id']);
+            $character->setName($result['name']);
+            $character->setDescription($result['description']);
+            $character->setPlaceOfBirth($result['place_of_birth']);
+            $character->setOccupation($result['occupations']);
+            $character->setFruit($result['fruit']);
+            $character->setCreatedAt($result['created_at']);
+            $character->setUpdatedAt($result['updated_at']);
+
+            return $character;
         } catch (\PDOException $exception) {
             error_log(
                 "CharacterRepository: error searching for character by id - {$exception->getMessage()} \n",
